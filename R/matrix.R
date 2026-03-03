@@ -51,8 +51,8 @@ sleuth_to_matrix <- function(obj, which_df, which_units) {
 
   res <- list()
 
-  s_data <- dplyr::select_(data, "target_id", "sample", which_units)
-  s_data <- tidyr::spread_(s_data, "sample", which_units)
+  s_data <- dplyr::select(data, "target_id", "sample", which_units)
+  s_data <- tidyr::spread(s_data, "sample", which_units)
   rownames(s_data) <- s_data$target_id
   s_data$target_id <- NULL
   s_data <- as.matrix(s_data)
