@@ -530,7 +530,7 @@ sleuth_prep <- function(
       agg_id <- unique(target_mapping[, aggregation_column, with = FALSE])
       agg_id <- agg_id[[1]]
       agg_id <- agg_id[!is.na(agg_id)]
-      mappings <- dplyr::select_(target_mapping, "target_id", aggregation_column)
+      mappings <- dplyr::select(target_mapping, "target_id", aggregation_column)
       mappings <- data.table::as.data.table(mappings)
       which_tms <- which(mappings$target_id %in% which_target_id)
       which_agg_id <- unique(mappings[which_tms, aggregation_column, with = FALSE])
@@ -723,7 +723,7 @@ sleuth_prep <- function(
       agg_id <- unique(target_mapping[, aggregation_column, with = FALSE])
       agg_id <- agg_id[[1]]
       agg_id <- agg_id[!is.na(agg_id)]
-      mappings <- dplyr::select_(target_mapping, "target_id", aggregation_column)
+      mappings <- dplyr::select(target_mapping, "target_id", aggregation_column)
       mappings <- data.table::as.data.table(mappings)
       which_tms <- which(mappings$target_id %in% which_target_id)
       which_agg_id <- unique(mappings[which_tms, aggregation_column, with = FALSE])
@@ -1038,7 +1038,7 @@ get_col <- function(obj, ...) {
   lapply(seq_along(obj$kal),
     function(i) {
       which_sample <- obj$sample_to_covariates$sample[i]
-      dplyr::select_(obj$kal[[i]]$abundance, "target_id",
+      dplyr::select(obj$kal[[i]]$abundance, "target_id",
         .dots = lazyeval::lazy_dots(...)) %>%
           mutate(sample = which_sample)
     }) %>%
@@ -1142,7 +1142,7 @@ transcripts_from_gene <- function(obj, test, test_type,
   }
 
   table <- sleuth_results(obj, test, test_type, which_model, pval_aggregate = FALSE)
-  table <- dplyr::select_(table, ~target_id, gene_colname, ~qval)
+  table <- dplyr::select(table, ~target_id, gene_colname, ~qval)
   table <- dplyr::arrange_(table, gene_colname, ~qval)
   if (!(gene_name %in% table[, 2])) {
       stop("Couldn't find gene ", gene_name)
@@ -1186,7 +1186,7 @@ gene_from_gene <- function(obj, gene_colname, gene_name) {
     }
   }
 
-  table <- unique(dplyr::select_(table, obj$gene_column, gene_colname))
+  table <- unique(dplyr::select(table, obj$gene_column, gene_colname))
   if (!(gene_name %in% table[, 2])) {
     stop("Couldn't find gene ", gene_name)
   }
